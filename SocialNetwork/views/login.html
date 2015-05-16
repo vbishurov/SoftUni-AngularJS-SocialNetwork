@@ -3,6 +3,8 @@
     <input type="text" id="usernameLogin" ng-model="userLogin.username"/>
     <label for="passwordLogin">Password:</label>
     <input type="password" id="passwordLogin" ng-model="userLogin.password"/>
-    <input type="submit" id="login" ng-click="login(userLogin)"/>
+    <label for="rememberMe">Remember me</label>
+    <input type="checkbox" id="rememberMe" ng-model="userLogin.remember"/>
+    <input type="button" id="login" ng-click="login(userLogin)" ng-disabled="buttonClicked" value="Login"/>
     <a href="#/register">Register</a>
 </form>
