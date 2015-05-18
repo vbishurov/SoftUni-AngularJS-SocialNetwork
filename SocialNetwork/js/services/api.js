@@ -17,6 +17,8 @@ app.factory('API', function ($http) {
             return $http.get(baseUrl + 'me', headers);
         },
         login: function (username, password) {
+            checkAuthorization();
+
             var data = {
                 username: username,
                 password: password
@@ -25,6 +27,8 @@ app.factory('API', function ($http) {
             return $http.post(baseUrl + 'users/login', data, headers);
         },
         register: function (username, password, confirmPassword, name, email, gender) {
+            checkAuthorization();
+
             var data = {
                 username: username,
                 password: password,
@@ -46,6 +50,8 @@ app.factory('API', function ($http) {
     function checkAuthorization() {
         if (sessionStorage['accessToken']) {
             headers['headers']['Authorization'] = 'Bearer ' + sessionStorage['accessToken'];
+        } else {
+            delete headers['headers']['Authorization'];
         }
     }
 });

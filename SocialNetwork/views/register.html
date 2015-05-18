@@ -9,37 +9,58 @@
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.username.$invalid && registerForm.username.$dirty }">
                     <input class="form-control input-lg" type="text" id="username" name="username" ng-model="username"
-                           placeholder="Username" required>
+                           placeholder="Username" ng-minlength="4" required>
                     <span class="ion-earth form-control-feedback"></span>
+                </div>
+
+                <div ng-messages="registerForm.username.$error" style="color:maroon" role="alert">
+                    <div ng-message="minlength">Username must be at least 4 characters long</div>
                 </div>
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.password.$invalid && registerForm.password.$dirty }">
                     <input class="form-control input-lg" type="password" name="password" ng-model="password"
-                           placeholder="Password" required>
+                           placeholder="Password" ng-minlength="6" required>
                     <span class="ion-key form-control-feedback"></span>
+                </div>
+
+
+                <div ng-messages="registerForm.password.$error" style="color:maroon" role="alert">
+                    <div ng-message="minlength">Password must be at least 6 characters long</div>
                 </div>
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.confirmPassword.$invalid && registerForm.confirmPassword.$dirty }">
                     <input class="form-control input-lg" type="password" name="confirmPassword"
                            ng-model="confirmPassword"
-                           placeholder="Confirm password" required>
+                           placeholder="Confirm password" compare-to="password" required>
                     <span class="ion-key form-control-feedback"></span>
+                </div>
+
+                <div ng-messages="registerForm.confirmPassword.$error" style="color:maroon" role="alert">
+                    <div ng-message="compareTo">Passwords do not match</div>
                 </div>
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.name.$invalid && registerForm.name.$dirty }">
                     <input class="form-control input-lg" type="text" id="name" name="name" ng-model="name"
-                           placeholder="Name" required>
+                           placeholder="Name" ng-pattern="/^[A-Z][a-z]+\s[A-Z][a-z]+$/" required>
                     <span class="ion-person form-control-feedback"></span>
+                </div>
+
+                <div ng-messages="registerForm.name.$error" style="color:maroon" role="alert">
+                    <div ng-message="pattern">Please enter valid first and last names</div>
                 </div>
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.email.$invalid && registerForm.email.$dirty }">
                     <input class="form-control input-lg" type="text" id="email" name="email" ng-model="email"
-                           placeholder="Email" required>
+                           placeholder="Email" ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/" required>
                     <span class="ion-at form-control-feedback"></span>
+                </div>
+
+                <div ng-messages="registerForm.email.$error" style="color:maroon" role="alert">
+                    <div ng-message="pattern">Please enter a valid email</div>
                 </div>
 
                 <div class="form-group has-feedback"

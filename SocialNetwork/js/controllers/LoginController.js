@@ -1,6 +1,10 @@
 app.controller('LoginController', ['$scope', 'API', 'storage', '$location', function ($scope, api, storage, $location) {
 
     $scope.login = function (username, password) {
+        if (password.length < 6) {
+            return;
+        }
+
         api.login(username, password)
             .then(function (data) {
                 var accessToken = data['data']['access_token'];

@@ -1,9 +1,5 @@
 var app = angular.module('SocialNetwork', ['ngRoute', 'ngMessages']);
 
-/*app.run(function ($rootScope, $window) {
-    $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-});*/
-
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
