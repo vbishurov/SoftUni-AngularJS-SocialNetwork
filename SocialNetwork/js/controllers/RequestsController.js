@@ -1,3 +1,0 @@
-app.controller('RequestsController', [function () {
-
-}]);

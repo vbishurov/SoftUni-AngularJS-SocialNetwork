@@ -1,40 +1,28 @@
-var app = angular.module('App', ['ngRoute', 'Filters']);
+var app = angular.module('SocialNetwork', ['ngRoute', 'ngMessages']);
 
-app.run(['$rootScope', '$location', function ($rootScope, $location) {
-    $rootScope.$on('$locationChangeStart', function () {
-        var isLoggedIn = sessionStorage['logged-in'] || localStorage['logged-in'],
-            isUnauthorizedRoute = $location.path() !== '/welcome' && $location.path() !== '/register' && $location.path() !== '/login';
-
-        if (!isLoggedIn && isUnauthorizedRoute) {
-            $location.path('/welcome');
-        } else if (isLoggedIn && $location.path() === '/welcome') {
-            $location.path('/home');
-        }
-    })
-}]);
+/*app.run(function ($rootScope, $window) {
+    $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
+});*/
 
 app.config(function ($routeProvider) {
     $routeProvider
-        .when('/home', {
-            controller: 'UserController',
-            templateUrl: 'views/home.html'
-        })
-        .when('/welcome', {
-            templateUrl: 'views/welcome.html'
+        .when('/', {
+            templateUrl: 'views/home.html',
+            controller: 'HomeController'
         })
         .when('/login', {
-            controller: 'UserController',
-            templateUrl: 'views/login.html'
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
         })
         .when('/register', {
-            controller: 'UserController',
-            templateUrl: 'views/register.html'
+            templateUrl: 'views/register.html',
+            controller: 'RegisterController'
         })
-        .when('/friendRequests', {
-            templateUrl: 'views/friend-requests.html',
-            controller: 'RequestsController'
+        .when('/photo/:id', {
+            templateUrl: 'views/detail.html',
+            controller: 'DetailController'
         })
         .otherwise({
-            redirectTo: '/welcome'
+            redirectTo: '/'
         });
 });

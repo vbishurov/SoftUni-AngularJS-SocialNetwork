@@ -1,41 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Social Network</title>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.css"/>
-    <link rel="stylesheet" href="css/animate.css"/>
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body ng-app="App">
+<body ng-app="SocialNetwork">
+
+<div ng-controller="NavbarController" class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <a href="/" class="navbar-brand"><i class="ion-images"></i> Social Network</a>
+            <li><a href="#/">Home</a></li>
+            <li ng-if="!isAuthenticated()"><a href="#/login">Log in</a></li>
+            <li ng-if="!isAuthenticated()"><a href="#/register">Register</a></li>
+            <li ng-if="isAuthenticated()"><a ng-click="logout()" href="">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-if="isAuthenticated() && currentUser.username">
+                <a href="http://instagram.com/{{currentUser.username}}">
+                    <img class="media-object img-rounded" ng-src="{{currentUser.picture}}">
+                    @{{currentUser.username}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div ng-view></div>
 
-<!--Libraries-->
-<script src="js/libs/jquery.js"></script>
-<script src="js/libs/jquery.noty.packaged.js"></script>
-<script src="js/libs/angular.js"></script>
-<script src="js/libs/angular-route.js"></script>
-<script src="js/libs/angular-growl-notifications.js"></script>
-<script src="js/libs/ui-bootstrap-0.13.0.js"></script>
+<script src="js/libs/angular.min.js"></script>
+<script src="js/libs/angular-route.min.js"></script>
+<script src="js/libs/angular-messages.min.js"></script>
 
 <!--Modules-->
-<script src="js/modules/filters.js"></script>
 <script src="js/modules/app.js"></script>
 
 <!--Controllers-->
-<script src="js/controllers/UserController.js"></script>
-<script src="js/controllers/RequestsController.js"></script>
-
-<!--Services-->
-<script src="js/services/headersService.js"></script>
-<script src="js/services/requesterService.js"></script>
-<script src="js/services/storageService.js"></script>
-<script src="js/services/notificationsService.js"></script>
-
-<!--Filters-->
-<script src="js/filters/genderFilter.js"></script>
+<script src="js/controllers/DetailController.js"></script>
+<script src="js/controllers/HomeController.js"></script>
+<script src="js/controllers/LoginController.js"></script>
+<script src="js/controllers/NavbarController.js"></script>
+<script src="js/controllers/RegisterController.js"></script>
 
 <!--Directives-->
+
+<!--Services-->
+<script src="js/services/api.js"></script>
+<script src="js/services/storage.js"></script>
+
+<!--Filters-->
+
 </body>
 </html>

@@ -1,4 +1,19 @@
-<h1>{{fullName}}</h1>
-<input type="button" ng-click="logout()" ng-disabled="buttonClicked" value="Logout"/>
-<a href="#/friendRequests">Friend Requests</a>
-<h2>{{gender | gender}}</h2>
+<div class="container">
+    <div ng-if="isAuthenticated() && currentUser.username">
+        <div class="row">
+            <h2>{{currentUser.name}} ({{currentUser.username}})</h2>
+        </div>
+    </div>
+
+    <div ng-if="!isAuthenticated()">
+        <div class="jumbotron">
+            <h2><i class="ion-images"></i> Social Network</h2>
+            <p>This is a basic Social Network. To continue, please log in or create a new account.</p>
+            <p>
+                <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
+                <a class="btn btn-lg btn-primary" href="#/register"><i class="ion-person-add"></i> Create account</a>
+            </p>
+        </div>
+    </div>
+
+</div>
