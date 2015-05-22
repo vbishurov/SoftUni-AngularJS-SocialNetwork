@@ -1,5 +1,11 @@
-.ion-transgender{
+.ion-transgender {
     margin-top: 20px;
     margin-right: 10px;
     font-size: 4rem;
+}
+
+.thumbnail {
+    width: 50px;
+    height: 50px;
+    display: inline;
 }

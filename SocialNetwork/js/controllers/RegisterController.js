@@ -6,7 +6,7 @@ app.controller('RegisterController', ['$scope', 'API', 'storage', '$location', f
                 var accessToken = data['data']['access_token'];
                 storage.set(accessToken);
 
-                api.getUser()
+                api.getCurrentUserData()
                     .then(function (data) {
                         var username = data['data']['username'];
                         var name = data['data']['name'];

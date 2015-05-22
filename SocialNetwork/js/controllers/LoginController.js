@@ -10,7 +10,7 @@ app.controller('LoginController', ['$scope', 'API', 'storage', '$location', func
                 var accessToken = data['data']['access_token'];
                 storage.set(accessToken);
 
-                api.getUser()
+                api.getCurrentUserData()
                     .then(function (data) {
                         var username = data['data']['username'],
                             name = data['data']['name'],

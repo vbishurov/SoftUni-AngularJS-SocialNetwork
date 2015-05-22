@@ -14,6 +14,14 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/register.html',
             controller: 'RegisterController'
         })
+        .when('/editProfile', {
+            templateUrl: 'views/edit-profile.html',
+            controller: 'EditProfileController'
+        })
+        .when('/changePassword', {
+            templateUrl: 'views/change-password.html',
+            controller: 'ChangePasswordController'
+        })
         .when('/photo/:id', {
             templateUrl: 'views/detail.html',
             controller: 'DetailController'

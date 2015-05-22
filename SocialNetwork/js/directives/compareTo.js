@@ -10,7 +10,11 @@ app.directive('compareTo', function () {
                 return modelValue === scope.otherModelValue;
             };
 
-            scope.$watch("otherModelValue", function () {
+            scope.$watch("otherModelValue", function (newValue, oldValue) {
+                if (oldValue === undefined) {
+                    return;
+                }
+
                 ngModel.$validate();
             });
         }

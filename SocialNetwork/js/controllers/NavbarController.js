@@ -7,4 +7,7 @@ app.controller('NavbarController', ['$scope', 'API', 'storage', function ($scope
                 storage.clear();
             })
     };
+
+    $scope.name = sessionStorage['name'];
+    $scope.profilePic = sessionStorage['profilePic']
 }]);
