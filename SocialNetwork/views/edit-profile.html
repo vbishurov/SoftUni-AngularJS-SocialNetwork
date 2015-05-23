@@ -2,20 +2,25 @@
 
     <div class="center-form panel">
         <div class="panel-body">
-            <h4 class="text-center"><i class="ion-person-add"></i> Sign up</h4>
+            <h4 class="text-center"><i class="ion-person-add"></i> Edit profile</h4>
 
-            <form method="post" ng-submit="register(username,password,confirmPassword,name,email,gender)"
-                  name="editProfileForm">
-                <div class="form-group has-feedback"
-                     ng-class="{ 'has-error' : editProfileForm.profilePic.$invalid && editProfileForm.profilePic.$dirty }">
-                    <file name="image" ng-model="profilePic" accept="image/png,image/jpg,image/jpeg"/>
-                    <span class="ion-at form-control-feedback"></span>
+            <form method="post"
+                  ng-submit="editProfileForm.$valid && editProfile(name,email,gender,newProfilePic,newCoverPic)"
+                  name="editProfileForm"  novalidate>
+                <div class="form-group">
+                    <img class="media-object img-rounded thumbnail" ng-if="newProfilePic" ng-src="{{newProfilePic}}">
+                    <input type="file" name="newProfilePic" accept="image/png,image/jpg,image/jpeg"
+                           ng-model="newProfilePic" custom-on-change="uploadFile"/>
+                </div>
+
+                <div ng-if="errorPic" class="alert alert-dismissible alert-danger" style="color:maroon">
+                    {{errorPicMessage}}
                 </div>
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : editProfileForm.name.$invalid && editProfileForm.name.$dirty }">
                     <input class="form-control input-lg" type="text" id="name" name="name" ng-model="name"
-                           placeholder="Name" ng-pattern="/^[A-Z][a-z]+\s[A-Z][a-z]+$/" required>
+                           placeholder="Name" ng-pattern="/^[A-Z][a-z]+\s[A-Z][a-z]+$/" required autofocus>
                     <span class="ion-person form-control-feedback"></span>
                 </div>
 
@@ -59,14 +64,21 @@
                     <span class="ion-transgender form-control-feedback"></span>
                 </div>
 
-                <div class="form-group has-feedback"
-                     ng-class="{ 'has-error' : editProfileForm.coverPic.$invalid && editProfileForm.coverPic.$dirty }">
-                    <file name="image" ng-model="coverPic" accept="image/png,image/jpg,image/jpeg"/>
-                    <span class="ion-at form-control-feedback"></span>
+                <div class="form-group has-feedback">
+                    <img class="media-object img-rounded thumbnail" ng-if="newCoverPic" ng-src="{{newCoverPic}}">
+                    <input type="file" name="newCoverPic" accept="image/png,image/jpg,image/jpeg" ng-model="newCoverPic"
+                           custom-on-change="uploadFile"/>
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary">Register</button>
-                <br/>
+                <div ng-if="errorCoverPic" class="alert alert-dismissible alert-danger" ng-model="errorPic"
+                     style="color:maroon">{{errorCoverPicMessage}}
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary" ng-disabled="editProfileForm.$invalid">Edit
+                    profile
+                </button>
+
+                <div ng-if="error" style="white-space: pre;" class="alert alert-danger">{{errorMessage}}</div>
             </form>
         </div>
     </div>

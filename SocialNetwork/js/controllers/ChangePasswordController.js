@@ -1,4 +1,4 @@
-app.controller('ChangePasswordController', ['$scope', 'API', '$location', function ($scope, api, $location) {
+app.controller('ChangePasswordController', ['$scope', 'API', '$state', 'errorHandler', function ($scope, api, $state, handleError) {
     $scope.changePassword = function (oldPassword, password, confirmPassword) {
         if (password !== confirmPassword) {
             return false;
@@ -6,9 +6,9 @@ app.controller('ChangePasswordController', ['$scope', 'API', '$location', functi
 
         api.changePassword(oldPassword, password, confirmPassword)
             .then(function () {
-                $location.path('/');
+                $state.go('welcome');
             }, function (err) {
-                console.log(err);
+                handleError($scope, err)
             })
     }
 }]);

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Social Network</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -14,7 +14,7 @@
 <div ng-controller="NavbarController" class="navbar navbar-default navbar-static-top">
     <div class="container">
         <ul class="nav navbar-nav">
-            <a href="/" class="navbar-brand"><i class="ion-images"></i> Social Network</a>
+            <a href="#/" class="navbar-brand"><i class="ion-images"></i> Social Network</a>
             <li><a href="#/">Home</a></li>
             <li ng-if="!isAuthenticated()"><a href="#/login">Log in</a></li>
             <li ng-if="!isAuthenticated()"><a href="#/register">Register</a></li>
@@ -25,7 +25,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li ng-if="isAuthenticated() && name">
                 <a href="#/newsFeed">
-                    <img class="media-object img-rounded thumbnail" data-ng-src="data:image/png;base64,{{profilePic}}">&nbsp;
+                    <img class="media-object img-rounded thumbnail" data-ng-src="{{profilePic}}">&nbsp;
                     {{name}}
                 </a>
             </li>
@@ -33,10 +33,10 @@
     </div>
 </div>
 
-<div ng-view></div>
+<div ui-view></div>
 
 <script src="js/libs/angular.min.js"></script>
-<script src="js/libs/angular-route.min.js"></script>
+<script src="js/libs/ui.router.js"></script>
 <script src="js/libs/angular-messages.min.js"></script>
 
 <!--Modules-->
@@ -54,9 +54,11 @@
 <!--Directives-->
 <script src="js/directives/compareTo.js"></script>
 <script src="js/directives/file.js"></script>
+
 <!--Services-->
 <script src="js/services/api.js"></script>
 <script src="js/services/storage.js"></script>
+<script src="js/services/errorHandler.js"></script>
 
 <!--Filters-->
 

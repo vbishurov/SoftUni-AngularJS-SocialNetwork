@@ -1,10 +1,12 @@
-app.controller('NavbarController', ['$scope', 'API', 'storage', function ($scope, api, storage) {
+app.controller('NavbarController', ['$scope', 'API', 'storage', 'errorHandler', function ($scope, api, storage, handleError) {
     $scope.isAuthenticated = api.isAuthenticated;
 
     $scope.logout = function () {
         api.logout()
-            .then(function (data) {
+            .then(function () {
                 storage.clear();
+            }, function (err) {
+                handleError($scope, err)
             })
     };
 

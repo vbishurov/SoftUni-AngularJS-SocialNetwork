@@ -1,7 +1,12 @@
-app.controller('LoginController', ['$scope', 'API', 'storage', '$location', function ($scope, api, storage, $location) {
+app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorHandler', function ($scope, api, storage, $state, handleError) {
+    this.cancel = $scope.$dismiss;
 
     $scope.login = function (username, password) {
+        $scope.clicked = true;
+        $scope.error = false;
+
         if (password.length < 6) {
+            $scope.clicked = false;
             return;
         }
 
@@ -21,8 +26,12 @@ app.controller('LoginController', ['$scope', 'API', 'storage', '$location', func
 
                         storage.set(accessToken, username, name, email, gender, profilePic, coverPic);
 
-                        $location.path('/');
+                        $state.go('welcome', {}, {reload: true});
+                    }, function (err) {
+                        handleError($scope, err)
                     })
+            }, function (err) {
+                handleError($scope, err)
             });
     };
 }]);

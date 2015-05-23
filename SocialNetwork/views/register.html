@@ -4,12 +4,13 @@
         <div class="panel-body">
             <h4 class="text-center"><i class="ion-person-add"></i> Sign up</h4>
 
-            <form method="post" ng-submit="register(username,password,confirmPassword,name,email,gender)"
-                  name="registerForm">
+            <form method="post"
+                  ng-submit="registerForm.$valid && register(username,password,confirmPassword,name,email,gender)"
+                  name="registerForm" novalidate>
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.username.$invalid && registerForm.username.$dirty }">
                     <input class="form-control input-lg" type="text" id="username" name="username" ng-model="username"
-                           placeholder="Username" ng-minlength="4" required>
+                           placeholder="Username" ng-minlength="4" required autofocus>
                     <span class="ion-earth form-control-feedback"></span>
                 </div>
 
@@ -23,7 +24,6 @@
                            placeholder="Password" ng-minlength="6" required>
                     <span class="ion-key form-control-feedback"></span>
                 </div>
-
 
                 <div ng-messages="registerForm.password.$error" style="color:maroon" role="alert">
                     <div ng-message="minlength">Password must be at least 6 characters long</div>
@@ -88,12 +88,16 @@
                     <span class="ion-transgender form-control-feedback"></span>
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary">Register</button>
+                <button type="submit" class="btn btn-block btn-primary" ng-disabled="registerForm.$invalid || clicked">
+                    Register
+                </button>
                 <br/>
 
                 <p class="text-center text-muted">
                     <small>Already have an account? <a href="#/login">Log in now</a></small>
                 </p>
+
+                <div ng-if="error" style="white-space: pre;" class="alert alert-danger">{{errorMessage}}</div>
             </form>
         </div>
     </div>

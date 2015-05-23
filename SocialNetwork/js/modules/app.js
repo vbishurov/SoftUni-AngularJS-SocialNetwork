@@ -1,32 +1,59 @@
-var app = angular.module('SocialNetwork', ['ngRoute', 'ngMessages']);
+var app = angular.module('SocialNetwork', ['ui.router', 'ngMessages']);
 
-app.config(function ($routeProvider) {
-    $routeProvider
-        .when('/', {
+app.run(function ($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+        var requireLogin = toState.data.requireLogin;
+
+        if (requireLogin && !sessionStorage['accessToken']) {
+            event.preventDefault();
+
+            $state.go('welcome')
+        }
+    });
+});
+
+app.config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+        .state('welcome', {
+            url: '/',
             templateUrl: 'views/home.html',
-            controller: 'HomeController'
+            controller: 'HomeController',
+            data: {
+                requireLogin: false
+            }
         })
-        .when('/login', {
+        .state('login', {
+            url: '/login',
             templateUrl: 'views/login.html',
-            controller: 'LoginController'
+            controller: 'LoginController',
+            data: {
+                requireLogin: false
+            }
         })
-        .when('/register', {
+        .state('register', {
+            url: '/register',
             templateUrl: 'views/register.html',
-            controller: 'RegisterController'
+            controller: 'RegisterController',
+            data: {
+                requireLogin: false
+            }
         })
-        .when('/editProfile', {
+        .state('editProfile', {
+            url: '/editProfile',
             templateUrl: 'views/edit-profile.html',
-            controller: 'EditProfileController'
+            controller: 'EditProfileController',
+            data: {
+                requireLogin: true
+            }
         })
-        .when('/changePassword', {
+        .state('changePassword', {
+            url: '/changePassword',
             templateUrl: 'views/change-password.html',
-            controller: 'ChangePasswordController'
-        })
-        .when('/photo/:id', {
-            templateUrl: 'views/detail.html',
-            controller: 'DetailController'
-        })
-        .otherwise({
-            redirectTo: '/'
+            controller: 'ChangePasswordController',
+            data: {
+                requireLogin: true
+            }
         });
+
+    $urlRouterProvider.otherwise('/');
 });

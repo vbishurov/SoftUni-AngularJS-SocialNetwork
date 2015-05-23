@@ -1,6 +1,9 @@
-app.controller('RegisterController', ['$scope', 'API', 'storage', '$location', function ($scope, api, storage, $location) {
+app.controller('RegisterController', ['$scope', 'API', 'storage', '$state', 'errorHandler', function ($scope, api, storage, $state, handleError) {
 
     $scope.register = function (username, password, confirmPassword, name, email, gender) {
+        $scope.clicked = true;
+        $scope.error = false;
+
         api.register(username, password, confirmPassword, name, email, gender)
             .then(function (data) {
                 var accessToken = data['data']['access_token'];
@@ -17,8 +20,12 @@ app.controller('RegisterController', ['$scope', 'API', 'storage', '$location', f
 
                         storage.set(accessToken, username, name, email, gender, profilePic, coverPic);
 
-                        $location.path('/');
+                        $state.go('welcome');
+                    }, function (err) {
+                        handleError($scope, err)
                     });
+            }, function (err) {
+                handleError($scope, err)
             })
     }
 }]);

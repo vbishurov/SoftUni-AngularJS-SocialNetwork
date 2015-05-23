@@ -1,6 +1,10 @@
 app.factory('storage', [function () {
     return {
         set: function (accessToken, username, name, email, gender, profilePic, coverPic) {
+            if (!accessToken) {
+                accessToken = sessionStorage['accessToken'];
+            }
+
             sessionStorage['accessToken'] = accessToken;
             sessionStorage['username'] = username;
             sessionStorage['name'] = name;

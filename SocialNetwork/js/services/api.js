@@ -1,10 +1,7 @@
 app.factory('API', function ($http) {
-
     var baseUrl = 'http://softuni-social-network.azurewebsites.net/api/',
         headers = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: {}
         };
 
     return {
@@ -86,7 +83,7 @@ app.factory('API', function ($http) {
 
             return $http.put(baseUrl + 'me/changepassword', data, headers);
         },
-        editProfile: function (name, email, profileImageData, coverImageData, gender) {
+        editProfile: function (name, email, gender, profileImageData, coverImageData) {
             checkAuthorization();
 
             var data = {
