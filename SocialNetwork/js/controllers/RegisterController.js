@@ -1,4 +1,5 @@
-app.controller('RegisterController', ['$scope', 'API', 'storage', '$state', 'errorHandler', function ($scope, api, storage, $state, handleError) {
+app.controller('RegisterController', ['$scope', 'API', 'storage', '$state', 'errorHandler', '$rootScope', function ($scope, api, storage, $state, handleError,$rootScope) {
+    console.log($rootScope);
 
     $scope.register = function (username, password, confirmPassword, name, email, gender) {
         $scope.clicked = true;

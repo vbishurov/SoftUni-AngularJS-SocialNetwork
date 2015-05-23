@@ -1,7 +1,5 @@
-app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandler', '$state', function ($scope, api, storage, handleError, $state) {
-    $scope.profilePic = sessionStorage['profilePic'];
-    $scope.coverPic = sessionStorage['coverPic'];
-    $scope.errorPic = false;
+app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandler', '$state', '$rootScope', function ($scope, api, storage, handleError, $state, $rootScope) {
+    console.log($rootScope);
 
     if (!$scope.newProfilePic) {
         $scope.newProfilePic = $scope.profilePic
@@ -39,6 +37,8 @@ app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandl
     };
 
     $scope.uploadFile = function (event) {
+        $scope.errorPic = false;
+        $scope.errorCoverPic = false;
         var name = event['srcElement']['name'];
 
         var file = event.target['files'][0],
@@ -48,11 +48,17 @@ app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandl
             $scope.errorCoverPic = true;
             $scope.errorCoverPicMessage = 'Cover picture size must be less than 1024kb';
             angular.element(event['srcElement']).val(null);
+
+            triggerChange();
+
             return;
         } else if (file['size'] > 128000 && name === 'newProfilePic') {
             $scope.errorPic = true;
             $scope.errorPicMessage = 'Profile picture size must be less than 128kb';
             angular.element(event['srcElement']).val(null);
+
+            triggerChange();
+
             return;
         }
 
@@ -61,10 +67,14 @@ app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandl
         reader.onload = function (event) {
             $scope[name] = event.currentTarget.result;
 
-            var triggerChange = document.querySelector('input[name="gender"]:checked')
-            angular.element(triggerChange).triggerHandler('click');
+            triggerChange();
         };
 
         reader.readAsDataURL(file);
     };
+
+    function triggerChange() {
+        var triggerChangeOn = document.querySelector('input[name="gender"]:checked')
+        angular.element(triggerChangeOn).triggerHandler('click');
+    }
 }]);

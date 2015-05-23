@@ -5,11 +5,11 @@
             <h4 class="text-center"><i class="ion-person-add"></i> Sign up</h4>
 
             <form method="post"
-                  ng-submit="registerForm.$valid && register(username,password,confirmPassword,name,email,gender)"
+                  ng-submit="registerForm.$valid && register(currentUser.username,currentUser.password,currentUser.confirmPassword,currentUser.name,currentUser.email,currentUser.gender)"
                   name="registerForm" novalidate>
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.username.$invalid && registerForm.username.$dirty }">
-                    <input class="form-control input-lg" type="text" id="username" name="username" ng-model="username"
+                    <input class="form-control input-lg" type="text" id="username" name="username" ng-model="currentUser.username"
                            placeholder="Username" ng-minlength="4" required autofocus>
                     <span class="ion-earth form-control-feedback"></span>
                 </div>
@@ -20,7 +20,7 @@
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.password.$invalid && registerForm.password.$dirty }">
-                    <input class="form-control input-lg" type="password" name="password" ng-model="password"
+                    <input class="form-control input-lg" type="password" name="password" ng-model="currentUser.password"
                            placeholder="Password" ng-minlength="6" required>
                     <span class="ion-key form-control-feedback"></span>
                 </div>
@@ -31,7 +31,7 @@
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.confirmPassword.$invalid && registerForm.confirmPassword.$dirty }">
-                    <input class="form-control input-lg" type="password" name="confirmPassword"
+                    <input class="form-control input-lg" type="password" name="currentUser.confirmPassword"
                            ng-model="confirmPassword"
                            placeholder="Confirm password" compare-to="password" required>
                     <span class="ion-key form-control-feedback"></span>
@@ -43,7 +43,7 @@
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.name.$invalid && registerForm.name.$dirty }">
-                    <input class="form-control input-lg" type="text" id="name" name="name" ng-model="name"
+                    <input class="form-control input-lg" type="text" id="name" name="name" ng-model="currentUser.name"
                            placeholder="Name" ng-pattern="/^[A-Z][a-z]+\s[A-Z][a-z]+$/" required>
                     <span class="ion-person form-control-feedback"></span>
                 </div>
@@ -54,7 +54,7 @@
 
                 <div class="form-group has-feedback"
                      ng-class="{ 'has-error' : registerForm.email.$invalid && registerForm.email.$dirty }">
-                    <input class="form-control input-lg" type="text" id="email" name="email" ng-model="email"
+                    <input class="form-control input-lg" type="text" id="email" name="email" ng-model="currentUser.email"
                            placeholder="Email" ng-pattern="/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/" required>
                     <span class="ion-at form-control-feedback"></span>
                 </div>
@@ -68,20 +68,20 @@
                      ng-init="gender=1">
                     <div class="radio">
                         <label for="male">
-                            <input type="radio" id="male" name="gender" ng-model="gender" value="1">
+                            <input type="radio" id="male" name="gender" ng-model="currentUser.gender" value="1">
                             Male
                         </label>
 
                     </div>
                     <div class="radio">
                         <label for="female">
-                            <input type="radio" id="female" name="gender" ng-model="gender" value="2">
+                            <input type="radio" id="female" name="gender" ng-model="currentUser.gender" value="2">
                             Female
                         </label>
                     </div>
                     <div class="radio">
                         <label for="other">
-                            <input type="radio" id="other" name="gender" ng-model="gender" value="0">
+                            <input type="radio" id="other" name="gender" ng-model="currentUser.gender" value="0">
                             Other
                         </label>
                     </div>

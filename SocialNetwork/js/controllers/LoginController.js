@@ -1,5 +1,5 @@
-app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorHandler', function ($scope, api, storage, $state, handleError) {
-    this.cancel = $scope.$dismiss;
+app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorHandler', '$rootScope', function ($scope, api, storage, $state, handleError, $rootScope) {
+    console.log($rootScope);
 
     $scope.login = function (username, password) {
         $scope.clicked = true;

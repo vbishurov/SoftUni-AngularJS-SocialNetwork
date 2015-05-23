@@ -5,7 +5,21 @@
 }
 
 .thumbnail {
+    margin: 0;
+    padding: 0;
     width: 50px;
     height: 50px;
     display: inline;
+}
+
+.searchResults{
+    position: absolute;
+}
+
+.searchResult {
+    display: block;
+    width: 200px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
 }

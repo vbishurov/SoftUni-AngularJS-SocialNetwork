@@ -1,4 +1,4 @@
-app.factory('API', function ($http) {
+app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
     var baseUrl = 'http://softuni-social-network.azurewebsites.net/api/',
         headers = {
             headers: {}
@@ -6,7 +6,7 @@ app.factory('API', function ($http) {
 
     return {
         isAuthenticated: function () {
-            return sessionStorage['accessToken'] ? true : false;
+            return $rootScope['currentUser'] ? true : false;
         },
         login: function (username, password) {
             checkAuthorization();
@@ -216,10 +216,10 @@ app.factory('API', function ($http) {
     };
 
     function checkAuthorization() {
-        if (sessionStorage['accessToken']) {
-            headers['headers']['Authorization'] = 'Bearer ' + sessionStorage['accessToken'];
+        if ($rootScope['currentUser']) {
+            headers['headers']['Authorization'] = 'Bearer ' + $rootScope['currentUser']['accessToken'];
         } else {
             delete headers['headers']['Authorization'];
         }
     }
-});
+}]);

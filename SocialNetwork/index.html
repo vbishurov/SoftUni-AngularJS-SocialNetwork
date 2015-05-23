@@ -25,11 +25,29 @@
         <ul class="nav navbar-nav navbar-right">
             <li ng-if="isAuthenticated() && name">
                 <a href="#/newsFeed">
-                    <img class="media-object img-rounded thumbnail" data-ng-src="{{profilePic}}">&nbsp;
+                    <img ng-if="profilePic" class="media-object img-rounded thumbnail"
+                         data-ng-src="{{profilePic}}">
                     {{name}}
                 </a>
             </li>
         </ul>
+        <form ng-if="isAuthenticated()" class="navbar-form navbar-left" role="search" ng-controller="SearchController">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="searchString" ng-change="search(searchString)"
+                       placeholder="Search">
+            </div>
+            <div ng-if="users" class="searchResults">
+                <div ng-repeat="user in users">
+                    <a href="#/users/{{user['username']}}" class="searchResult">
+                        {{user['name']}}
+                        <img ng-if="user['profileImageData']" class="media-object img-rounded thumbnail pull-right"
+                             data-ng-src="{{user['profileImageData']}}">
+                        <img ng-if="!user['profileImageData']" class="media-object img-rounded thumbnail pull-right"
+                             src="images/no_photo_available.jpg" alt="No profile picture"/>
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -50,6 +68,8 @@
 <script src="js/controllers/RegisterController.js"></script>
 <script src="js/controllers/ChangePasswordController.js"></script>
 <script src="js/controllers/EditProfileController.js"></script>
+<script src="js/controllers/SearchController.js"></script>
+<script src="js/controllers/ViewUserWallController.js"></script>
 
 <!--Directives-->
 <script src="js/directives/compareTo.js"></script>

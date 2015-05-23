@@ -1,26 +1,22 @@
-app.factory('storage', [function () {
+app.factory('storage', ['$rootScope', function ($rootScope) {
     return {
         set: function (accessToken, username, name, email, gender, profilePic, coverPic) {
             if (!accessToken) {
-                accessToken = sessionStorage['accessToken'];
+                accessToken = $rootScope['accessToken'];
             }
 
-            sessionStorage['accessToken'] = accessToken;
-            sessionStorage['username'] = username;
-            sessionStorage['name'] = name;
-            sessionStorage['email'] = email;
-            sessionStorage['gender'] = gender;
-            sessionStorage['profilePic'] = profilePic;
-            sessionStorage['coverPic'] = coverPic;
+            $rootScope.currentUser = {
+                accessToken: accessToken,
+                username: username,
+                name: name,
+                email: email,
+                gender: gender,
+                profilePic: profilePic,
+                coverPic: coverPic
+            };
         },
         clear: function () {
-            sessionStorage.removeItem('accessToken');
-            sessionStorage.removeItem('username');
-            sessionStorage.removeItem('name');
-            sessionStorage.removeItem('email');
-            sessionStorage.removeItem('gender');
-            sessionStorage.removeItem('profilePic');
-            sessionStorage.removeItem('coverPic');
+            delete $rootScope['currentUser'];
         }
     }
 }]);

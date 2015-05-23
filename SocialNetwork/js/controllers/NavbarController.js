@@ -1,4 +1,5 @@
-app.controller('NavbarController', ['$scope', 'API', 'storage', 'errorHandler', function ($scope, api, storage, handleError) {
+app.controller('NavbarController', ['$scope', 'API', 'storage', 'errorHandler', '$rootScope', function ($scope, api, storage, handleError, $rootScope) {
+    console.log($rootScope);
     $scope.isAuthenticated = api.isAuthenticated;
 
     $scope.logout = function () {
@@ -11,5 +12,5 @@ app.controller('NavbarController', ['$scope', 'API', 'storage', 'errorHandler', 
     };
 
     $scope.name = sessionStorage['name'];
-    $scope.profilePic = sessionStorage['profilePic']
+    $scope.profilePic = sessionStorage['profilePic'] === "null" ? undefined : sessionStorage['profilePic'];
 }]);

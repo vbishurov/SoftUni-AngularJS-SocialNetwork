@@ -1,16 +1,29 @@
 var app = angular.module('SocialNetwork', ['ui.router', 'ngMessages']);
 
-app.run(function ($rootScope, $state) {
+app.run(['$rootScope', '$state', 'API', function ($rootScope, $state, api) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
 
-        if (requireLogin && !sessionStorage['accessToken']) {
+        if (requireLogin && !$rootScope.currentUser) {
             event.preventDefault();
 
             $state.go('welcome')
+        } else if (requireLogin && toParams['username']) {
+            var _event = event;
+
+            api.getUserData(toParams['username'], true)
+                .then(function (data) {
+                    if (!data['data']['isFriend']) {
+                        _event.preventDefault();
+
+                        $state.go('welcome');
+                    } else {
+                        $rootScope['user'] = data['data'];
+                    }
+                })
         }
     });
-});
+}]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -50,6 +63,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/changePassword',
             templateUrl: 'views/change-password.html',
             controller: 'ChangePasswordController',
+            data: {
+                requireLogin: true
+            }
+        })
+        .state('viewUserWall', {
+            url: '/users/:username',
+            templateUrl: 'views/user-wall.html',
+            controller: 'ViewUserWallController',
             data: {
                 requireLogin: true
             }
