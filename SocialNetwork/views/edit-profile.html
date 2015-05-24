@@ -5,7 +5,7 @@
             <h4 class="text-center"><i class="ion-person-add"></i> Edit profile</h4>
 
             <form method="post"
-                  ng-submit="editProfileForm.$valid && editProfile(currentUser.name,currentUser.email,currentUser.gender,currentUser.newProfilePic,currentUser.newCoverPic)"
+                  ng-submit="editProfileForm.$valid && editProfile(currentUser.name,currentUser.email,currentUser.gender,editProfileForm.newProfilePic,editProfileForm.newCoverPic)"
                   name="editProfileForm"  novalidate>
                 <div class="form-group">
                     <img class="media-object img-rounded thumbnail" ng-if="newProfilePic" ng-src="{{newProfilePic}}">
@@ -74,7 +74,7 @@
                      style="color:maroon">{{errorCoverPicMessage}}
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary" ng-disabled="editProfileForm.$invalid">Edit
+                <button type="submit" class="btn btn-block btn-primary" ng-disabled="editProfileForm.$invalid || clicked">Edit
                     profile
                 </button>
 

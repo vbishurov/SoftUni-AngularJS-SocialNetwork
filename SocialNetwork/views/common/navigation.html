@@ -1,0 +1,22 @@
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <a href="#/" class="navbar-brand"><i class="ion-images"></i> Social Network</a>
+            <li><a href="#/">Home</a></li>
+            <li ng-if="!isAuthenticated()"><a href="#/login">Log in</a></li>
+            <li ng-if="!isAuthenticated()"><a href="#/register">Register</a></li>
+            <li ng-if="isAuthenticated()"><a href="#/editProfile">Edit Profile</a></li>
+            <li ng-if="isAuthenticated()"><a href="#/changePassword">Change Password</a></li>
+            <li ng-if="isAuthenticated()"><a ng-click="logout()" href="">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-if="isAuthenticated()">
+                <a href="#/users/{{currentUser.username}}">
+                    <img ng-if="currentUser.profilePic" class="media-object img-rounded thumbnail" data-ng-src="{{currentUser.profilePic}}">
+                    {{currentUser.name}}
+                </a>
+            </li>
+        </ul>
+        <div ui-view="search"></div>
+    </div>
+</div>

@@ -1,5 +1,4 @@
 app.controller('ChangePasswordController', ['$scope', 'API', '$state', 'errorHandler', '$rootScope', function ($scope, api, $state, handleError, $rootScope) {
-    console.log($rootScope);
     $scope.changePassword = function (oldPassword, password, confirmPassword) {
         if (password !== confirmPassword) {
             return false;

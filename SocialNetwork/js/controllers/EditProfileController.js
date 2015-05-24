@@ -1,17 +1,17 @@
 app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandler', '$state', '$rootScope', function ($scope, api, storage, handleError, $state, $rootScope) {
-    console.log($rootScope);
-
     if (!$scope.newProfilePic) {
-        $scope.newProfilePic = $scope.profilePic
+        $scope.newProfilePic = $rootScope.currentUser['profilePic'];
     }
 
     if (!$scope.newCoverPic) {
-        $scope.newCoverPic = $scope.coverPic
+        $scope.newCoverPic = $rootScope.currentUser['coverPic'];
     }
 
-    $scope.editProfile = function (name, email, gender, profilePic, coverPic) {
-        var profilePicBase64 = profilePic.split(',')[1],
-            coverPicBase64 = coverPic.split(',')[1];
+    $scope.editProfile = function (name, email, gender) {
+        $scope.clicked = true;
+
+        var profilePicBase64 = $scope.newProfilePic.split(',')[1],
+            coverPicBase64 = $scope.newCoverPic.split(',')[1];
 
         api.editProfile(name, email, gender, profilePicBase64, coverPicBase64)
             .then(function (data) {
@@ -24,14 +24,16 @@ app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandl
                             profilePic = data['data']['profileImageData'],
                             coverPic = data['data']['coverImageData'];
 
-                        storage.set(null, username, name, email, gender, profilePic, coverPic);
+                        storage.set($rootScope['currentUser']['accessToken'], username, name, email, gender, profilePic, coverPic);
 
                         $state.go('welcome');
                     }, function (err) {
+                        $scope.clicked = false;
                         handleError($scope, err)
                     })
 
             }, function (err) {
+                $scope.clicked = false;
                 handleError($scope, err)
             });
     };
@@ -61,8 +63,6 @@ app.controller('EditProfileController', ['$scope', 'API', 'storage', 'errorHandl
 
             return;
         }
-
-        $scope.errorPic = false;
 
         reader.onload = function (event) {
             $scope[name] = event.currentTarget.result;

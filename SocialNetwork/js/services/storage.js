@@ -14,9 +14,12 @@ app.factory('storage', ['$rootScope', function ($rootScope) {
                 profilePic: profilePic,
                 coverPic: coverPic
             };
+
+            sessionStorage['currentUser'] = JSON.stringify($rootScope['currentUser']);
         },
         clear: function () {
             delete $rootScope['currentUser'];
+            delete sessionStorage['currentUser'];
         }
     }
 }]);

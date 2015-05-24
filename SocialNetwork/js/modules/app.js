@@ -1,76 +1,132 @@
 var app = angular.module('SocialNetwork', ['ui.router', 'ngMessages']);
 
-app.run(['$rootScope', '$state', 'API', function ($rootScope, $state, api) {
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+app.run(['$rootScope', '$state', 'API', function ($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function (event, toState) {
         var requireLogin = toState.data.requireLogin;
 
         if (requireLogin && !$rootScope.currentUser) {
             event.preventDefault();
 
             $state.go('welcome')
-        } else if (requireLogin && toParams['username']) {
-            var _event = event;
-
-            api.getUserData(toParams['username'], true)
-                .then(function (data) {
-                    if (!data['data']['isFriend']) {
-                        _event.preventDefault();
-
-                        $state.go('welcome');
-                    } else {
-                        $rootScope['user'] = data['data'];
-                    }
-                })
         }
     });
 }]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
+
     $stateProvider
         .state('welcome', {
             url: '/',
-            templateUrl: 'views/home.html',
-            controller: 'HomeController',
+            views: {
+                main: {
+                    templateUrl: 'views/welcome.html',
+                    controller: 'HomeController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@welcome': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                },
+                additional: {
+                    templateUrl: 'views/news-feed.html',
+                    controller: 'NewsFeedController'
+                }
+            },
             data: {
                 requireLogin: false
             }
         })
         .state('login', {
             url: '/login',
-            templateUrl: 'views/login.html',
-            controller: 'LoginController',
+            views: {
+                main: {
+                    templateUrl: 'views/login.html',
+                    controller: 'LoginController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                }
+            },
             data: {
                 requireLogin: false
             }
         })
         .state('register', {
             url: '/register',
-            templateUrl: 'views/register.html',
-            controller: 'RegisterController',
+            views: {
+                main: {
+                    templateUrl: 'views/register.html',
+                    controller: 'RegisterController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                }
+            },
             data: {
                 requireLogin: false
             }
         })
         .state('editProfile', {
             url: '/editProfile',
-            templateUrl: 'views/edit-profile.html',
-            controller: 'EditProfileController',
+            views: {
+                main: {
+                    templateUrl: 'views/edit-profile.html',
+                    controller: 'EditProfileController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@editProfile': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                }
+            },
             data: {
                 requireLogin: true
             }
         })
         .state('changePassword', {
             url: '/changePassword',
-            templateUrl: 'views/change-password.html',
-            controller: 'ChangePasswordController',
+            views: {
+                main: {
+                    templateUrl: 'views/change-password.html',
+                    controller: 'ChangePasswordController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@changePassword': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                }
+            },
             data: {
                 requireLogin: true
             }
         })
         .state('viewUserWall', {
             url: '/users/:username',
-            templateUrl: 'views/user-wall.html',
-            controller: 'ViewUserWallController',
+            views: {
+                main: {
+                    templateUrl: 'views/user-wall.html',
+                    controller: 'ViewUserWallController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@viewUserWall': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                }
+            },
             data: {
                 requireLogin: true
             }

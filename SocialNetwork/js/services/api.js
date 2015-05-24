@@ -4,12 +4,21 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             headers: {}
         };
 
+    setAuthorization();
+
     return {
         isAuthenticated: function () {
-            return $rootScope['currentUser'] ? true : false;
+            if ($rootScope['currentUser']) {
+                return true;
+            } else if (sessionStorage['currentUser']) {
+                $rootScope['currentUser'] = JSON.parse(sessionStorage['currentUser']);
+                return true;
+            } else {
+                return false;
+            }
         },
         login: function (username, password) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 username: username,
@@ -19,7 +28,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.post(baseUrl + 'users/login', data, headers);
         },
         register: function (username, password, confirmPassword, name, email, gender) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 username: username,
@@ -33,47 +42,47 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.post(baseUrl + 'users/register', data, headers);
         },
         getCurrentUserData: function () {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'me', headers);
         },
         logout: function () {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.post(baseUrl + 'users/logout', {}, headers);
         },
         getOwnFriends: function () {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'me/friends', headers);
         },
         getFriendRequests: function () {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'me/requests', headers);
         },
         sendFriendRequest: function (username) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.post(baseUrl + 'me/requests/' + username, {}, headers);
         },
         acceptFriendRequest: function (requestId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.put(baseUrl + 'me/requests/' + requestId + '?status=approved', {}, headers);
         },
         denyFriendRequest: function (requestId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.put(baseUrl + 'requests/' + requestId + '?status=rejected', {}, headers);
         },
         getNewsFeed: function (startId, pageSize) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'me/feed?StartPostId=' + startId + '&PageSize=' + pageSize, headers);
         },
         changePassword: function (oldPassword, newPassword, repeatNewPassword) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 oldPassword: oldPassword,
@@ -84,7 +93,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.put(baseUrl + 'me/changepassword', data, headers);
         },
         editProfile: function (name, email, gender, profileImageData, coverImageData) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 name: name,
@@ -97,7 +106,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.put(baseUrl + 'me', data, headers);
         },
         getUserData: function (username, isPreviewData) {
-            checkAuthorization();
+            setAuthorization();
 
             var serviceUrl = baseUrl + 'users/' + username;
 
@@ -108,17 +117,17 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.get(serviceUrl, headers);
         },
         searchUsers: function (query) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'users/search?searchTerm=' + query, headers);
         },
         getFriendWall: function (username, startId, pageSize) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'users/' + username + '/wall?StartPostId=' + startId + '&PageSize=' + pageSize, headers);
         },
         getFriendsOfFriends: function (username, isPreviewData) {
-            checkAuthorization();
+            setAuthorization();
 
             var serviceUrl = baseUrl + 'users/' + username + '/friends';
 
@@ -129,12 +138,12 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.get(serviceUrl, headers);
         },
         getPostById: function (id) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'Posts/' + id, headers);
         },
         addPost: function (targetUsername, postContent) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 username: targetUsername,
@@ -144,7 +153,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.post(baseUrl + 'posts', data, headers);
         },
         editPost: function (postId, newText) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 postContent: newText
@@ -153,12 +162,12 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.put(baseUrl + 'posts/' + postId, data, headers);
         },
         deletePost: function (postId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.delete(baseUrl + 'Posts/' + postId, headers);
         },
         getPostLikes: function (postId, isPreviewData) {
-            checkAuthorization();
+            setAuthorization();
 
             var serviceUrl = baseUrl + 'Posts/' + postId + '/likes';
 
@@ -169,22 +178,22 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.get(serviceUrl, headers);
         },
         likePost: function (postId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.post(baseUrl + 'Posts/' + postId + '/likes', {}, headers);
         },
         unlikePost: function (postId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.delete(baseUrl + 'Posts/' + postId + '/likes', headers);
         },
         getPostComments: function (postId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.get(baseUrl + 'posts/' + postId + '/comments', headers);
         },
         commentPost: function (postId, commentText) {
-            checkAuthorization();
+            setAuthorization();
 
             var data = {
                 commentContent: commentText
@@ -193,7 +202,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.post(baseUrl + 'posts/' + postId + '/comments', Database, headers)
         },
         getCommentLikes: function (postId, commentId, isPreviewData) {
-            checkAuthorization();
+            setAuthorization();
 
             var serviceUrl = baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes';
 
@@ -204,19 +213,22 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             return $http.get(serviceUrl, headers);
         },
         likeComment: function (postId, commentId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.post(baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes', {}, headers)
         },
         unlikeComment: function (postId, commentId) {
-            checkAuthorization();
+            setAuthorization();
 
             return $http.delete(baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes', {}, headers)
         }
     };
 
-    function checkAuthorization() {
+    function setAuthorization() {
         if ($rootScope['currentUser']) {
+            headers['headers']['Authorization'] = 'Bearer ' + $rootScope['currentUser']['accessToken'];
+        } else if (sessionStorage['currentUser']) {
+            $rootScope['currentUser'] = JSON.parse(sessionStorage['currentUser']);
             headers['headers']['Authorization'] = 'Bearer ' + $rootScope['currentUser']['accessToken'];
         } else {
             delete headers['headers']['Authorization'];

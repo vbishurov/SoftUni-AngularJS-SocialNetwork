@@ -1,0 +1,21 @@
+<form ng-if="isAuthenticated()" class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+        <input type="text" class="form-control" ng-model="searchString" ng-change="search(searchString)"
+               placeholder="Search" ng-mouseenter="currentUser.isSearching=true"
+               ng-mouseleave="currentUser.isSearching=false">
+    </div>
+
+    <div ng-if="users" class="searchResults" ng-show="currentUser.isSearching" ng-hide="!currentUser.isSearching"
+         ng-mouseenter="currentUser.isSearching=true" ng-mouseleave="currentUser.isSearching=false">
+
+        <div ng-repeat="user in users">
+            <a href="#/users/{{user['username']}}" class="searchResult" ng-click="currentUser.isSearching=false">
+                {{user['name']}}
+                <img ng-if="user['profileImageData']" class="media-object img-rounded thumbnail pull-right"
+                     data-ng-src="{{user['profileImageData']}}">
+                <img ng-if="!user['profileImageData']" class="media-object img-rounded thumbnail pull-right"
+                     src="images/no_photo_available.jpg" alt="No profile picture"/>
+            </a>
+        </div>
+    </div>
+</form>

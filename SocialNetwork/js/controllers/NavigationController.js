@@ -1,5 +1,4 @@
-app.controller('NavbarController', ['$scope', 'API', 'storage', 'errorHandler', '$rootScope', function ($scope, api, storage, handleError, $rootScope) {
-    console.log($rootScope);
+app.controller('NavigationController', ['$scope', 'API', 'storage', 'errorHandler', '$rootScope', function ($scope, api, storage, handleError, $rootScope) {
     $scope.isAuthenticated = api.isAuthenticated;
 
     $scope.logout = function () {
