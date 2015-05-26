@@ -74,7 +74,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
         denyFriendRequest: function (requestId) {
             setAuthorization();
 
-            return $http.put(baseUrl + 'requests/' + requestId + '?status=rejected', {}, headers);
+            return $http.put(baseUrl + 'me/requests/' + requestId + '?status=rejected', {}, headers);
         },
         getNewsFeed: function (startId, pageSize) {
             setAuthorization();

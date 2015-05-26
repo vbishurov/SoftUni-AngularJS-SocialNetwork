@@ -61,4 +61,11 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
                 console.log('success');
             })
     };
+
+    $scope.sendRequest = function () {
+        api.sendFriendRequest($scope['userViewed']['username'])
+            .then(function () {
+                console.log('success');
+            });
+    }
 }]);

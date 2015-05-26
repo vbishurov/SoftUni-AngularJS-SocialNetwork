@@ -16,7 +16,13 @@
                 </form>
             </div>
 
-            <div ng-repeat="post in userPosts" class="postContainer" id="{{post['id']}}">
+            <button ng-if="!isFriendWall && userViewed['username']!==currentUser['username']"
+                    ng-click="sendRequest()">Send friend request
+            </button>
+
+            <div ng-if="isFriendWall" >Friend</div>
+
+            <div ng-repeat="post in userPosts" class="postContainer col-lg-6" id="{{post['id']}}">
                 <div>
                     <img ng-if="post['author']['profileImageData']"
                          class="media-object img-rounded thumbnail pull-right"

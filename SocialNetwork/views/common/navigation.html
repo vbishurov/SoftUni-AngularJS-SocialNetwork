@@ -5,6 +5,28 @@
             <li><a href="#/">Home</a></li>
             <li ng-if="!isAuthenticated()"><a href="#/login">Log in</a></li>
             <li ng-if="!isAuthenticated()"><a href="#/register">Register</a></li>
+            <li ng-if="isAuthenticated() && currentUser && pendingRequestsCount>0"><a ng-click="alternate()" href="">{{pendingRequestsCount}}
+                Pending requests</a>
+
+                <div ng-show="!hidden" ng-hide="hidden" class="pendingRequests">
+
+                    <div ng-repeat="request in currentUser['pendingRequests']">
+                        <div class="pendingRequest">
+                            <img ng-if="request['user']['profileImageData']"
+                                 class="media-object img-rounded thumbnail pull-right"
+                                 data-ng-src="{{request['user']['profileImageData']}}">
+                            <img ng-if="!request['user']['profileImageData']"
+                                 class="media-object img-rounded thumbnail pull-right"
+                                 src="images/no_photo_available.jpg" alt="No profile picture"/>
+
+                            <p>{{request['user']['name']}}</p>
+                            <button class="accept" ng-click="accept(request['id'])">Accept</button>
+                            <button class="decline" ng-click="decline(request['id'])">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
             <li ng-if="isAuthenticated()"><a href="#/editProfile">Edit Profile</a></li>
             <li ng-if="isAuthenticated()"><a href="#/changePassword">Change Password</a></li>
             <li ng-if="isAuthenticated()"><a ng-click="logout()" href="">Logout</a></li>
@@ -12,7 +34,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li ng-if="isAuthenticated()">
                 <a href="#/users/{{currentUser.username}}">
-                    <img ng-if="currentUser.profilePic" class="media-object img-rounded thumbnail" data-ng-src="{{currentUser.profilePic}}">
+                    <img ng-if="currentUser.profilePic" class="media-object img-rounded thumbnail"
+                         data-ng-src="{{currentUser.profilePic}}">
                     {{currentUser.name}}
                 </a>
             </li>

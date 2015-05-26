@@ -13,7 +13,6 @@ app.run(['$rootScope', '$state', 'API', function ($rootScope, $state) {
 }]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-
     $stateProvider
         .state('welcome', {
             url: '/',
