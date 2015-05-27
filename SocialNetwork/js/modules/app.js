@@ -32,6 +32,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 additional: {
                     templateUrl: 'views/news-feed.html',
                     controller: 'NewsFeedController'
+                },
+                'post@welcome':{
+                    templateUrl:'views/common/post.html',
+                    controller:'PostController'
                 }
             },
             data: {
@@ -122,6 +126,26 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     controller: 'NavigationController'
                 },
                 'search@viewUserWall': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                }
+            },
+            data: {
+                requireLogin: true
+            }
+        })
+        .state('friends', {
+            url: '/friends',
+            views: {
+                main: {
+                    templateUrl: 'views/friends.html',
+                    controller: 'FriendsController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@friends': {
                     templateUrl: 'views/common/search.html',
                     controller: 'SearchController'
                 }

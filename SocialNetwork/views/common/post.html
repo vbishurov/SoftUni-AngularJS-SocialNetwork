@@ -1,0 +1,53 @@
+<div class="info">
+    <div class="profileImg">
+        <img ng-if="post['author']['profileImageData']"
+             class="media-object img-rounded thumbnail"
+             data-ng-src="{{post['author']['profileImageData']}}">
+        <img ng-if="!post['author']['profileImageData']" class="media-object img-rounded thumbnail"
+             src="images/no_photo_available.jpg" alt="No profile picture"/>
+    </div>
+    <div class="post">
+        &nbsp;
+        <div>
+            <a href="#/users/{{post['author']['username']}}">{{post['author']['name']}}</a>
+        </div>
+
+        <div>{{post['date'] | date:'dd.MM.yyyy H:mm:ss'}}</div>
+    </div>
+</div>
+
+<p class="postContent">{{post['postContent']}}</p>
+
+<div>
+    <span ng-if="post['likesCount']>0">Likes: {{post['likesCount']}}</span>
+
+    <a class="btn btn-primary"
+       ng-if="!post['liked'] && (post['wallOwner']['isFriend'] || post['author']['isFriend'] || post['author']['username'] === currentUser['username'])"
+       ng-click="like(post['id'])">Like
+    </a>
+    <a class="btn btn-primary"
+       ng-if="post['liked'] && (post['wallOwner']['isFriend'] ||post['author']['isFriend'] || post['author']['username'] === currentUser['username'])"
+       ng-click="unlike(post['id'])">Unlike
+    </a>
+
+    <a class="btn btn-danger"
+       ng-if="post['wallOwner']['username'] === currentUser['username'] || post['author']['username'] === currentUser['username']"
+       ng-click="deletePost(post['id'])">Delete Post
+    </a>
+
+    <a ng-if="!post['edit']&&post['author']['username'] === currentUser['username']" class="btn btn-warning"
+       ng-click="post['edit']=true">Edit
+        post</a>
+
+    <form ng-if="post['edit'] && post['author']['username'] === currentUser['username']" name="editPostForm"
+          method="post"
+          ng-submit="editPost(post['id'],editPostForm.newText)">
+        <label for="newText">New text</label>
+        <input type="text" id="newText" ng-model="editPostForm.newText"/>
+        <input type="submit" class="btn btn-success" value="Edit Post"/>
+        <a class="btn btn-primary" ng-click="post['edit']=false">Cancel</a>
+    </form>
+</div>
+<div class="comments" ng-repeat="comment in post['comments']">
+    <p>{{comment['commentContent']}}</p>
+</div>

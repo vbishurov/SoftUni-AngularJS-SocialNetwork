@@ -7,8 +7,8 @@
 .thumbnail {
     margin: 0;
     padding: 0;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     display: inline;
 }
 
@@ -20,9 +20,9 @@
 .searchResult {
     display: inherit;
     width: 200px;
-    height: 60px;
+    height: 80px;
     text-align: center;
-    line-height: 60px;
+    line-height: 80px;
     background-color: black;
     color: white;
 }
@@ -65,4 +65,31 @@
 
 .decline {
     color: black;
+}
+
+.profileImg {
+    display: inline-block;
+    line-height: 1em;
+    vertical-align: top;
+}
+
+.postContainer {
+    border: 1px solid black;
+    margin: 0 0 10px 0;
+    padding: 10px;
+}
+
+.info {
+    height: 80px;
+}
+
+.post {
+    height: 100%;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.postContent {
+    text-align: center;
+    word-wrap: break-word;
 }

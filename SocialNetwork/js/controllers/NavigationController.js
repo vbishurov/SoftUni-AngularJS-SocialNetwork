@@ -5,8 +5,8 @@ app.controller('NavigationController', ['$rootScope', '$scope', 'API', 'storage'
     $scope.logout = function () {
         api.logout()
             .then(function () {
-                $state.go('welcome');
                 storage.clear();
+                $state.go('welcome', {}, {reload: true});
             }, function (err) {
                 handleError($scope, err)
             })

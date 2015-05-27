@@ -1,0 +1,15 @@
+<div class="panel-body">
+    <div class="form-group">
+        <input type="text" class="form-control" ng-model="friendsFilter" ng-change="filter(friendsFilter)"
+               placeholder="Filter" >
+    </div>
+
+    <div ng-repeat="friend in friends">
+        <a href="#/users/{{friend['username']}}">
+            <img ng-if="friend['profileImageData']"
+                 class="media-object img-rounded thumbnail pull-right"
+                 data-ng-src="{{friend['profileImageData']}}">
+            {{friend['name']}}
+        </a>
+    </div>
+</div>
