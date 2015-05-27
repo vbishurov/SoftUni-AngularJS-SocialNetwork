@@ -1,6 +1,7 @@
 <div class="container">
     <div class="center-form panel">
         <h2 class="text-center">News Feed</h2>
+
         <div class="panel-body col-lg-6">
 
             <div ng-repeat="post in posts" class="postContainer" id="{{post['id']}}">
@@ -8,17 +9,8 @@
             </div>
         </div>
 
-        <div class="panel-body col-lg-6">
-            <a href="#/friends">Friends - {{friendsCount}} total</a>
-
-            <div ng-repeat="friend in friends">
-                <a href="#/users/{{friend['username']}}">
-                    <img ng-if="friend['profileImageData']"
-                         class="media-object img-rounded thumbnail pull-right"
-                         data-ng-src="{{friend['profileImageData']}}">
-                    {{friend['name']}}
-                </a>
-            </div>
-        </div>
+    </div>
+    <div class="panel-body col-lg-6">
+        <div ui-view="friends"></div>
     </div>
 </div>

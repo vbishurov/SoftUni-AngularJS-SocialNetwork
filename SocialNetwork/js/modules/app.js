@@ -36,6 +36,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 'post@welcome':{
                     templateUrl:'views/common/post.html',
                     controller:'PostController'
+                },
+                'comment@welcome':{
+                    templateUrl:'views/common/comment.html',
+                    controller:'CommentController'
+                },
+                'friends@welcome':{
+                    templateUrl:'views/common/friends.html',
+                    controller:'NewsFeedController'
                 }
             },
             data: {
@@ -128,6 +136,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 'search@viewUserWall': {
                     templateUrl: 'views/common/search.html',
                     controller: 'SearchController'
+                },
+                'post@viewUserWall':{
+                    templateUrl:'views/common/post.html',
+                    controller:'PostController'
                 }
             },
             data: {

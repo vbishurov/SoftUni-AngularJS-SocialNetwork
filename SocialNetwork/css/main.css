@@ -93,3 +93,7 @@
     text-align: center;
     word-wrap: break-word;
 }
+
+.commentsContainer {
+    margin-left: 20%;
+}

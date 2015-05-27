@@ -199,7 +199,7 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
                 commentContent: commentText
             };
 
-            return $http.post(baseUrl + 'posts/' + postId + '/comments', Database, headers)
+            return $http.post(baseUrl + 'posts/' + postId + '/comments', data, headers)
         },
         getCommentLikes: function (postId, commentId, isPreviewData) {
             setAuthorization();
@@ -220,7 +220,21 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
         unlikeComment: function (postId, commentId) {
             setAuthorization();
 
-            return $http.delete(baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes', {}, headers)
+            return $http.delete(baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes', headers)
+        },
+        deleteComment: function (postId, commentId) {
+            setAuthorization();
+
+            return $http.delete(baseUrl + 'posts/' + postId + '/comments/' + commentId, headers)
+        },
+        editComment: function (postId, commentId, newText) {
+            setAuthorization();
+
+            var data = {
+                commentContent: newText
+            };
+
+            return $http.put(baseUrl + 'posts/' + postId + '/comments/' + commentId, data, headers)
         }
     };
 

@@ -7,7 +7,6 @@
              src="images/no_photo_available.jpg" alt="No profile picture"/>
     </div>
     <div class="post">
-        &nbsp;
         <div>
             <a href="#/users/{{post['author']['username']}}">{{post['author']['name']}}</a>
         </div>
@@ -39,6 +38,9 @@
        ng-click="post['edit']=true">Edit
         post</a>
 
+    <a ng-if="!post['comment'] && (post['author']['isFriend'] || post['wallOwner']['isFriend'])" class="btn btn-info"
+                   ng-click="post['comment']=true">Comment</a>
+
     <form ng-if="post['edit'] && post['author']['username'] === currentUser['username']" name="editPostForm"
           method="post"
           ng-submit="editPost(post['id'],editPostForm.newText)">
@@ -47,7 +49,16 @@
         <input type="submit" class="btn btn-success" value="Edit Post"/>
         <a class="btn btn-primary" ng-click="post['edit']=false">Cancel</a>
     </form>
+
+    <form ng-if="post['comment'] && (post['author']['isFriend'] || post['wallOwner']['isFriend'])" name="commentForm"
+          method="post"
+          ng-submit="commentPost(post['id'],commentForm.commentContent)">
+        <label for="commentContent">Comment</label>
+        <input type="text" id="commentContent" ng-model="commentForm.commentContent"/>
+        <input type="submit" class="btn btn-success" value="Comment"/>
+        <a class="btn btn-primary" ng-click="post['comment']=false">Cancel</a>
+    </form>
 </div>
-<div class="comments" ng-repeat="comment in post['comments']">
-    <p>{{comment['commentContent']}}</p>
+<div class="commentsContainer" ng-repeat="comment in post['comments']">
+    <div ui-view="comment"></div>
 </div>

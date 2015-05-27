@@ -8,40 +8,15 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
 
             api.getFriendWall($stateParams['username'], '', 10)
                 .then(function (data) {
-                    $scope.userPosts = data['data'];
+                    $scope.posts = data['data'];
                 });
         });
 
-    $scope.like = function (id) {
-        api.likePost(id)
+    $scope.sendRequest = function () {
+        api.sendFriendRequest($scope['userViewed']['username'])
             .then(function () {
-                angular.forEach($scope.userPosts, function (value) {
-                    if (value['id'] === id) {
-                        value['liked'] = true;
-                        value['likesCount']++;
-                    }
-                })
+                console.log('success');
             });
-    };
-
-    $scope.unlike = function (id) {
-        api.unlikePost(id)
-            .then(function () {
-                angular.forEach($scope.userPosts, function (value) {
-                    if (value['id'] === id) {
-                        value['liked'] = false;
-                        value['likesCount']--;
-                    }
-                })
-            });
-    };
-
-    $scope.deletePost = function (id) {
-        api.deletePost(id)
-            .then(function () {
-                $state.reload();
-                console.log('deleted');
-            })
     };
 
     $scope.addPost = function (postContent) {
@@ -53,19 +28,4 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
                 })
         }
     };
-
-    $scope.editPost = function (id, newText) {
-        api.editPost(id, newText)
-            .then(function () {
-                $state.reload();
-                console.log('success');
-            })
-    };
-
-    $scope.sendRequest = function () {
-        api.sendFriendRequest($scope['userViewed']['username'])
-            .then(function () {
-                console.log('success');
-            });
-    }
 }]);

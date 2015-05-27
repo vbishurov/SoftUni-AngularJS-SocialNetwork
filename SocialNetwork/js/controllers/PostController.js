@@ -31,16 +31,6 @@ app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API',
             })
     };
 
-    $scope.addPost = function (postContent) {
-        if ($scope.isFriendWall || $scope['userViewed']['username'] === $rootScope['currentUser']['username']) {
-            api.addPost($scope['userViewed']['username'], postContent)
-                .then(function () {
-                    $state.reload();
-                    console.log('success');
-                })
-        }
-    };
-
     $scope.editPost = function (id, newText) {
         api.editPost(id, newText)
             .then(function () {
@@ -48,4 +38,12 @@ app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API',
                 console.log('success');
             })
     };
+
+    $scope.commentPost = function (postId, commentText) {
+        api.commentPost(postId, commentText)
+            .then(function () {
+                $state.reload();
+                console.log('success');
+            })
+    }
 }]);

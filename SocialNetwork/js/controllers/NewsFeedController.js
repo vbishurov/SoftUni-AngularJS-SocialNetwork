@@ -2,6 +2,7 @@ app.controller('NewsFeedController', ['$rootScope', '$scope', 'API', function ($
     if (api.isAuthenticated()) {
         api.getNewsFeed('', 10)
             .then(function (data) {
+                console.log(data['data']);
                 $scope.posts = data['data'];
             });
 
