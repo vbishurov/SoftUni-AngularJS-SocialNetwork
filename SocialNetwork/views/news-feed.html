@@ -7,6 +7,7 @@
             <div ng-repeat="post in posts" class="postContainer" id="{{post['id']}}">
                 <div ui-view="post"></div>
             </div>
+            <div infinite-scroll="update()" infinite-scroll-disabled="!id"></div>
         </div>
 
     </div>

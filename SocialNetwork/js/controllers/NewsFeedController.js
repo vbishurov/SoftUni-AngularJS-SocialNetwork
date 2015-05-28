@@ -1,15 +1,35 @@
 app.controller('NewsFeedController', ['$rootScope', '$scope', 'API', function ($rootScope, $scope, api) {
-    if (api.isAuthenticated()) {
-        api.getNewsFeed('', 10)
-            .then(function (data) {
-                console.log(data['data']);
-                $scope.posts = data['data'];
-            });
+    $scope.posts = [];
 
-        api.getOwnFriends().
-            then(function (data) {
-                $scope.friends = data['data'];
-                $scope.friendsCount = data['data'].length;
-            })
+    $scope.$watch('$viewContentLoaded', function () {
+        if (api.isAuthenticated()) {
+            api.getNewsFeed('', 10)
+                .then(function (data) {
+                    console.log('initial');
+                    $scope.id = data['data'][data['data'].length - 1]['id'];
+                    $scope.posts = $scope.posts.concat(data['data']);
+                });
+
+            api.getOwnFriends().
+                then(function (data) {
+                    $scope.friends = data['data'];
+                    $scope.friendsCount = data['data'].length;
+                });
+
+        }
+    });
+
+    $scope.update = function () {
+        if ($scope.id) {
+            api.getNewsFeed($scope.id, 10).
+                then(function (data) {
+                    if (data['data'].length > 0) {
+                        $scope.id = data['data'][data['data'].length - 1]['id'];
+                        $scope.posts = $scope.posts.concat(data['data']);
+                    } else {
+                        $scope.id = false;
+                    }
+                })
+        }
     }
 }]);

@@ -1,5 +1,6 @@
 app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams', 'API', '$state', function ($rootScope, $scope, $stateParams, api, $state) {
     $scope.isAuthenticated = api.isAuthenticated;
+    $scope.posts = [];
 
     api.getUserData($stateParams['username'])
         .then(function (data) {
@@ -8,7 +9,8 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
 
             api.getFriendWall($stateParams['username'], '', 10)
                 .then(function (data) {
-                    $scope.posts = data['data'];
+                    $scope.id = data['data'][data['data'].length - 1]['id'];
+                    $scope.posts = $scope.posts.concat(data['data']);
                 });
         });
 
@@ -28,4 +30,18 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
                 })
         }
     };
+
+    $scope.update = function () {
+        if ($scope.id) {
+            api.getFriendWall($stateParams['username'], $scope.id, 10).
+                then(function (data) {
+                    if (data['data'].length > 0) {
+                        $scope.id = data['data'][data['data'].length - 1]['id'];
+                        $scope.posts = $scope.posts.concat(data['data']);
+                    } else {
+                        $scope.id = false;
+                    }
+                })
+        }
+    }
 }]);

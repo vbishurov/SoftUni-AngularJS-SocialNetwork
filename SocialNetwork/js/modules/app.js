@@ -1,4 +1,4 @@
-var app = angular.module('SocialNetwork', ['ui.router', 'ngMessages']);
+var app = angular.module('SocialNetwork', ['ui.router', 'ngMessages', 'infinite-scroll']);
 
 app.run(['$rootScope', '$state', 'API', function ($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function (event, toState) {
@@ -33,17 +33,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: 'views/news-feed.html',
                     controller: 'NewsFeedController'
                 },
-                'post@welcome':{
-                    templateUrl:'views/common/post.html',
-                    controller:'PostController'
+                'post@welcome': {
+                    templateUrl: 'views/common/post.html',
+                    controller: 'PostController'
                 },
-                'comment@welcome':{
-                    templateUrl:'views/common/comment.html',
-                    controller:'CommentController'
+                'comment@welcome': {
+                    templateUrl: 'views/common/comment.html',
+                    controller: 'CommentController'
                 },
-                'friends@welcome':{
-                    templateUrl:'views/common/friends.html',
-                    controller:'NewsFeedController'
+                'friends@welcome': {
+                    templateUrl: 'views/common/friends.html',
+                    controller: 'NewsFeedController'
                 }
             },
             data: {
@@ -137,9 +137,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                     templateUrl: 'views/common/search.html',
                     controller: 'SearchController'
                 },
-                'post@viewUserWall':{
-                    templateUrl:'views/common/post.html',
-                    controller:'PostController'
+                'post@viewUserWall': {
+                    templateUrl: 'views/common/post.html',
+                    controller: 'PostController'
                 }
             },
             data: {
