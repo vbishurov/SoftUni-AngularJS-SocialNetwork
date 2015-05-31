@@ -39,13 +39,13 @@
         post</a>
 
     <a ng-if="!post['comment'] && (post['author']['isFriend'] || post['wallOwner']['isFriend'])" class="btn btn-info"
-                   ng-click="post['comment']=true">Comment</a>
+       ng-click="post['comment']=true">Comment</a>
 
     <form ng-if="post['edit'] && post['author']['username'] === currentUser['username']" name="editPostForm"
           method="post"
           ng-submit="editPost(post['id'],editPostForm.newText)">
         <label for="newText">New text</label>
-        <input type="text" id="newText" ng-model="editPostForm.newText"/>
+        <input type="text" id="newText" ng-model="editPostForm.newText" autofocus/>
         <input type="submit" class="btn btn-success" value="Edit Post"/>
         <a class="btn btn-primary" ng-click="post['edit']=false">Cancel</a>
     </form>
@@ -54,11 +54,12 @@
           method="post"
           ng-submit="commentPost(post['id'],commentForm.commentContent)">
         <label for="commentContent">Comment</label>
-        <input type="text" id="commentContent" ng-model="commentForm.commentContent"/>
+        <input type="text" id="commentContent" ng-model="commentForm.commentContent" autofocus/>
         <input type="submit" class="btn btn-success" value="Comment"/>
         <a class="btn btn-primary" ng-click="post['comment']=false">Cancel</a>
     </form>
 </div>
-<div class="commentsContainer" ng-repeat="comment in post['comments']">
+<div class="commentsContainer" ng-repeat="comment in post['comments'] | limitTo: limit">
     <div ui-view="comment"></div>
 </div>
+<button ng-if="limit===3 && post['comments'].length === 3" ng-click="showComments(post['id'],post)">More...</button>

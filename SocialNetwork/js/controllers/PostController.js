@@ -1,5 +1,7 @@
 app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API', '$state', 'errorHandler', 'notification',
     function ($rootScope, $scope, $stateParams, api, $state, handleError, notification) {
+        $scope.limit = 3;
+
         $scope.like = function (id) {
             api.likePost(id)
                 .then(function () {
@@ -67,6 +69,14 @@ app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API',
                 }, function (err) {
                     handleError($scope, err);
                     notification.error($scope.errorMessage);
+                })
+        };
+
+        $scope.showComments = function (id, post) {
+            api.getPostComments(id)
+                .then(function (data) {
+                    $scope.limit = data['data'].length;
+                    post['comments'] = data['data'];
                 })
         }
     }]);

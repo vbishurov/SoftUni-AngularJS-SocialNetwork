@@ -21,10 +21,6 @@
                 </form>
             </div>
 
-            <button ng-if="!isFriendWall && userViewed['username']!==currentUser['username']"
-                    ng-click="sendRequest()">Send friend request
-            </button>
-
             <div ng-if="isFriendWall">Friend</div>
 
             <div ng-repeat="post in posts" class="postContainer" id="{{post['id']}}">
@@ -33,9 +29,16 @@
 
             <div infinite-scroll="update()" infinite-scroll-disabled="!id"></div>
         </div>
-        <div class="panel-body col-lg-6">
+        <div class="panel-body col-lg-6" ng-if="isFriendWall || userViewed['username'] === currentUser['username']">
             <a href="#/users/{{userViewed['username']}}/friends">Friends - {{friends.length}} total</a>
+
             <div ui-view="friends"></div>
+        </div>
+
+        <div class="panel-body col-lg-6" ng-show="userViewed" ng-if="!isFriendWall && userViewed['username']!==currentUser['username']">
+            <h2>Send a friend request to see {{userViewed['name']}}'s friends</h2>
+            <button ng-click="sendRequest()">Send friend request
+            </button>
         </div>
     </div>
 </div>

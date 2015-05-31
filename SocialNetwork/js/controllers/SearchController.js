@@ -8,7 +8,6 @@ app.controller('SearchController', ['$scope', 'API', 'errorHandler', 'notificati
                 $scope.users = data['data'];
             }, function (err) {
                 handleError($scope, err);
-                notification.error($scope.errorMessage);
             });
     };
 

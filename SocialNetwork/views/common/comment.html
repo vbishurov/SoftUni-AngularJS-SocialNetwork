@@ -39,7 +39,7 @@
 <form ng-if="comment['edit'] && comment['author']['username'] === currentUser['username']" name="editCommentForm"
       method="post"
       ng-submit="edit(post['id'],comment['id'],editCommentForm.newCommentText)">
-    <input type="text" id="newCommentText" ng-model="editCommentForm.newCommentText"/>
+    <input type="text" id="newCommentText" ng-model="editCommentForm.newCommentText" autofocus/>
     <input type="submit" class="btn btn-success" value="Edit Comment"/>
     <a class="btn btn-primary" ng-click="comment['edit']=false">Cancel</a>
 </form>

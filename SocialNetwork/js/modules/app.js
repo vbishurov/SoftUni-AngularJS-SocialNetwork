@@ -181,7 +181,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/users/:username/friends',
             views: {
                 main: {
-                    templateUrl: 'views/friendsOfFriends.html',
+                    templateUrl: 'views/friends.html',
                     controller: 'FriendsOfFriendsController'
                 },
                 navigation: {

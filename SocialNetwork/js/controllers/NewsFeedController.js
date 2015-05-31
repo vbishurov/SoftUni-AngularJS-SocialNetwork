@@ -11,10 +11,9 @@ app.controller('NewsFeedController', ['$rootScope', '$scope', 'API', function ($
                     }
                 });
 
-            api.getOwnFriends().
-                then(function (data) {
+            api.getOwnFriends()
+                .then(function (data) {
                     $scope.friends = data['data'];
-                    $scope.friendsCount = data['data'].length;
                 });
 
         }

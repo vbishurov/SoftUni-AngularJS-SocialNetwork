@@ -51,8 +51,12 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
 
             return $http.post(baseUrl + 'users/logout', {}, headers);
         },
-        getOwnFriends: function () {
+        getOwnFriends: function (isPreview) {
             setAuthorization();
+
+            if (isPreview) {
+                return $http.get(baseUrl + 'me/friends/preview', headers);
+            }
 
             return $http.get(baseUrl + 'me/friends', headers);
         },
@@ -203,6 +207,11 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             };
 
             return $http.put(baseUrl + 'posts/' + postId + '/comments/' + commentId, data, headers)
+        },
+        getPostComments: function (id) {
+            setAuthorization();
+
+            return $http.get(baseUrl + 'posts/' + id + '/comments', headers);
         }
     };
 

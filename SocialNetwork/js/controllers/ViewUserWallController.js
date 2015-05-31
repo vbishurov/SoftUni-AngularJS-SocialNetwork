@@ -22,6 +22,11 @@ app.controller('ViewUserWallController', ['$rootScope', '$scope', '$stateParams'
                         then(function (data) {
                             $scope.friends = data['data']['friends'];
                         });
+                } else if (data['data']['username'] === $rootScope.currentUser['username']) {
+                    api.getOwnFriends()
+                        .then(function (data) {
+                            $scope.friends = data['data'];
+                        });
                 }
             }, function (err) {
                 handleError($scope, err);
