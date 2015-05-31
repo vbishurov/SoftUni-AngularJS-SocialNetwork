@@ -140,6 +140,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 'post@viewUserWall': {
                     templateUrl: 'views/common/post.html',
                     controller: 'PostController'
+                },
+                'comment@viewUserWall': {
+                    templateUrl: 'views/common/comment.html',
+                    controller: 'CommentController'
+                },
+                'friends@viewUserWall': {
+                    templateUrl: 'views/common/friends.html',
+                    controller: 'ViewUserWallController'
                 }
             },
             data: {
@@ -160,6 +168,32 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 'search@friends': {
                     templateUrl: 'views/common/search.html',
                     controller: 'SearchController'
+                },
+                'friends@friends':{
+                    templateUrl:'views/common/friends.html'
+                }
+            },
+            data: {
+                requireLogin: true
+            }
+        })
+        .state('friendsOfFriends', {
+            url: '/users/:username/friends',
+            views: {
+                main: {
+                    templateUrl: 'views/friendsOfFriends.html',
+                    controller: 'FriendsOfFriendsController'
+                },
+                navigation: {
+                    templateUrl: 'views/common/navigation.html',
+                    controller: 'NavigationController'
+                },
+                'search@friendsOfFriends': {
+                    templateUrl: 'views/common/search.html',
+                    controller: 'SearchController'
+                },
+                'friends@friendsOfFriends':{
+                    templateUrl:'views/common/friends.html'
                 }
             },
             data: {

@@ -5,9 +5,10 @@ app.controller('NewsFeedController', ['$rootScope', '$scope', 'API', function ($
         if (api.isAuthenticated()) {
             api.getNewsFeed('', 10)
                 .then(function (data) {
-                    console.log('initial');
-                    $scope.id = data['data'][data['data'].length - 1]['id'];
-                    $scope.posts = $scope.posts.concat(data['data']);
+                    if (data['data'][data['data'].length - 1]) {
+                        $scope.id = data['data'][data['data'].length - 1]['id'];
+                        $scope.posts = $scope.posts.concat(data['data']);
+                    }
                 });
 
             api.getOwnFriends().

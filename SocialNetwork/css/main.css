@@ -12,7 +12,7 @@
     display: inline;
 }
 
-.searchResults{
+.searchResults {
     position: absolute;
     display: block;
 }
@@ -27,7 +27,7 @@
     color: white;
 }
 
-.pendingRequests{
+.pendingRequests {
     position: absolute;
     display: block;
 }
@@ -96,4 +96,13 @@
 
 .commentsContainer {
     margin-left: 20%;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    border: 1px solid black;
+    line-height: 80px;
 }

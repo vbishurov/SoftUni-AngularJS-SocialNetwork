@@ -1,4 +1,4 @@
-app.factory('errorHandler', function () {
+app.factory('errorHandler', ['notification', function (notification) {
     return function ($scope, err) {
         $scope.clicked = false;
         $scope.error = true;
@@ -18,5 +18,6 @@ app.factory('errorHandler', function () {
         } else if (err['data']['message']) {
             $scope.errorMessage = err['data']['message'];
         }
+
     }
-});
+}]);

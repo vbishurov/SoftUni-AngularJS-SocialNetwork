@@ -137,11 +137,6 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
 
             return $http.get(serviceUrl, headers);
         },
-        getPostById: function (id) {
-            setAuthorization();
-
-            return $http.get(baseUrl + 'Posts/' + id, headers);
-        },
         addPost: function (targetUsername, postContent) {
             setAuthorization();
 
@@ -166,17 +161,6 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
 
             return $http.delete(baseUrl + 'Posts/' + postId, headers);
         },
-        getPostLikes: function (postId, isPreviewData) {
-            setAuthorization();
-
-            var serviceUrl = baseUrl + 'Posts/' + postId + '/likes';
-
-            if (isPreviewData) {
-                serviceUrl += '/preview';
-            }
-
-            return $http.get(serviceUrl, headers);
-        },
         likePost: function (postId) {
             setAuthorization();
 
@@ -187,11 +171,6 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
 
             return $http.delete(baseUrl + 'Posts/' + postId + '/likes', headers);
         },
-        getPostComments: function (postId) {
-            setAuthorization();
-
-            return $http.get(baseUrl + 'posts/' + postId + '/comments', headers);
-        },
         commentPost: function (postId, commentText) {
             setAuthorization();
 
@@ -200,17 +179,6 @@ app.factory('API', ['$rootScope', '$http', function ($rootScope, $http) {
             };
 
             return $http.post(baseUrl + 'posts/' + postId + '/comments', data, headers)
-        },
-        getCommentLikes: function (postId, commentId, isPreviewData) {
-            setAuthorization();
-
-            var serviceUrl = baseUrl + 'posts/' + postId + '/comments/' + commentId + '/likes';
-
-            if (isPreviewData) {
-                serviceUrl += '/preview';
-            }
-
-            return $http.get(serviceUrl, headers);
         },
         likeComment: function (postId, commentId) {
             setAuthorization();

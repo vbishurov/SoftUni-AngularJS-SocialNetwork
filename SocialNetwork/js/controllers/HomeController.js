@@ -1,3 +1,3 @@
-app.controller('HomeController', ['$scope', 'API', '$rootScope', function ($scope, api, $rootScope) {
+app.controller('HomeController', ['$scope', 'API', function ($scope, api) {
     $scope.isAuthenticated = api.isAuthenticated;
 }]);

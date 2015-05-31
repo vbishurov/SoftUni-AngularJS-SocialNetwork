@@ -1,11 +1,11 @@
-app.controller('FriendsController', ['$rootScope', '$scope', 'API', 'errorHandler', 'notification',
-    function ($rootScope, $scope, api, handleError, notification) {
+app.controller('FriendsOfFriendsController', ['$rootScope', '$scope', 'API', 'errorHandler', 'notification', '$stateParams',
+    function ($rootScope, $scope, api, handleError, notification, $stateParams) {
         $scope.state = 'friends';
 
         console.log($scope.state);
 
-        api.getOwnFriends().
-            then(function (data) {
+        api.getFriendsOfFriends($stateParams['username'])
+            .then(function (data) {
                 $scope.friends = data['data'];
                 $scope.friendsCopy = data['data'];
             }, function (err) {

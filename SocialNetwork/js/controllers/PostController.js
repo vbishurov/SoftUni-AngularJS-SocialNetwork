@@ -1,49 +1,72 @@
-app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API', '$state', function ($rootScope, $scope, $stateParams, api, $state) {
-    $scope.like = function (id) {
-        api.likePost(id)
-            .then(function () {
-                angular.forEach($scope.posts, function (value) {
-                    if (value['id'] === id) {
-                        value['liked'] = true;
-                        value['likesCount']++;
-                    }
+app.controller('PostController', ['$rootScope', '$scope', '$stateParams', 'API', '$state', 'errorHandler', 'notification',
+    function ($rootScope, $scope, $stateParams, api, $state, handleError, notification) {
+        $scope.like = function (id) {
+            api.likePost(id)
+                .then(function () {
+                    notification.success('Post liked successfully');
+
+                    angular.forEach($scope.posts, function (value) {
+                        if (value['id'] === id) {
+                            value['liked'] = true;
+                            value['likesCount']++;
+                        }
+                    })
+                }, function (err) {
+                    handleError($scope, err);
+                    notification.error($scope.errorMessage);
+                });
+        };
+
+        $scope.unlike = function (id) {
+            api.unlikePost(id)
+                .then(function () {
+                    notification.success('Post disliked successfully');
+
+                    angular.forEach($scope.posts, function (value) {
+                        if (value['id'] === id) {
+                            value['liked'] = false;
+                            value['likesCount']--;
+                        }
+                    })
+                }, function (err) {
+                    handleError($scope, err);
+                    notification.error($scope.errorMessage);
+                });
+        };
+
+        $scope.deletePost = function (id) {
+            api.deletePost(id)
+                .then(function () {
+                    notification.success('Post deleted successfully');
+
+                    $state.reload();
+                }, function (err) {
+                    handleError($scope, err);
+                    notification.error($scope.errorMessage);
                 })
-            });
-    };
+        };
 
-    $scope.unlike = function (id) {
-        api.unlikePost(id)
-            .then(function () {
-                angular.forEach($scope.posts, function (value) {
-                    if (value['id'] === id) {
-                        value['liked'] = false;
-                        value['likesCount']--;
-                    }
+        $scope.editPost = function (id, newText) {
+            api.editPost(id, newText)
+                .then(function () {
+                    notification.success('Post edited successfully');
+
+                    $state.reload();
+                }, function (err) {
+                    handleError($scope, err);
+                    notification.error($scope.errorMessage);
                 })
-            });
-    };
+        };
 
-    $scope.deletePost = function (id) {
-        api.deletePost(id)
-            .then(function () {
-                $state.reload();
-                console.log('deleted');
-            })
-    };
+        $scope.commentPost = function (postId, commentText) {
+            api.commentPost(postId, commentText)
+                .then(function () {
+                    notification.success('Post commented successfully');
 
-    $scope.editPost = function (id, newText) {
-        api.editPost(id, newText)
-            .then(function () {
-                $state.reload();
-                console.log('success');
-            })
-    };
-
-    $scope.commentPost = function (postId, commentText) {
-        api.commentPost(postId, commentText)
-            .then(function () {
-                $state.reload();
-                console.log('success');
-            })
-    }
-}]);
+                    $state.reload();
+                }, function (err) {
+                    handleError($scope, err);
+                    notification.error($scope.errorMessage);
+                })
+        }
+    }]);

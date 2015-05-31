@@ -1,19 +1,22 @@
-app.controller('SearchController', ['$scope', 'API', '$rootScope', function ($scope, api, $rootScope) {
+app.controller('SearchController', ['$scope', 'API', 'errorHandler', 'notification', function ($scope, api, handleError, notification) {
     var searchResults = document.getElementById('searchContainer');
 
     $scope.search = function (searchTerm) {
-        $scope.isSearching=true;
+        $scope.isSearching = true;
         api.searchUsers(searchTerm)
             .then(function (data) {
                 $scope.users = data['data'];
+            }, function (err) {
+                handleError($scope, err);
+                notification.error($scope.errorMessage);
             });
     };
 
     $scope.display = function () {
-        angular.element(searchResults).css('display','block');
+        angular.element(searchResults).css('display', 'block');
     };
 
     $scope.hide = function () {
-        angular.element(searchResults).css('display','none !important');
+        angular.element(searchResults).css('display', 'none !important');
     };
 }]);

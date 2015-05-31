@@ -1,4 +1,4 @@
-app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorHandler', '$rootScope', function ($scope, api, storage, $state, handleError, $rootScope) {
+app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorHandler', 'notification', function ($scope, api, storage, $state, handleError, notification) {
     $scope.login = function (username, password) {
         $scope.clicked = true;
         $scope.error = false;
@@ -10,6 +10,7 @@ app.controller('LoginController', ['$scope', 'API', 'storage', '$state', 'errorH
 
         api.login(username, password)
             .then(function (data) {
+                notification.success('Login successful');
                 var accessToken = data['data']['access_token'];
                 storage.set(accessToken);
 

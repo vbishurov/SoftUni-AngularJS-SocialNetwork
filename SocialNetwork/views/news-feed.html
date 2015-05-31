@@ -1,17 +1,24 @@
 <div class="container">
-    <div class="center-form panel">
+    <div class="panel">
         <h2 class="text-center">News Feed</h2>
 
         <div class="panel-body col-lg-6">
 
-            <div ng-repeat="post in posts" class="postContainer" id="{{post['id']}}">
+            <div ng-repeat="post in posts" ng-if="posts.length > 0" class="postContainer" id="{{post['id']}}">
                 <div ui-view="post"></div>
             </div>
             <div infinite-scroll="update()" infinite-scroll-disabled="!id"></div>
         </div>
 
-    </div>
-    <div class="panel-body col-lg-6">
-        <div ui-view="friends"></div>
+        <div class="panel-body col-lg-6" ng-if="friends.length  > 0">
+            <a href="#/friends">Friends - {{friends.length}} total</a>
+
+            <div ui-view="friends"></div>
+        </div>
+
+        <div class="panel-body" ng-if="friends.length === 0 && posts.length === 0">
+            <h2>New to social networking?</h2>
+            <a href="#/users/{{currentUser['username']}}">Post something on your wall</a>
+        </div>
     </div>
 </div>

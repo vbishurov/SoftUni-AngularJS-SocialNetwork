@@ -1,13 +1,31 @@
-<div class="form-group">
-    <input type="text" class="form-control" ng-model="friendsFilter" ng-change="filter(friendsFilter)"
-           placeholder="Filter">
-</div>
+<table>
+    <tbody>
+    <tr ng-if="state==='friends'" ng-repeat="friend in friends">
+        <td>
+            <a href="#/users/{{friend['username']}}">
+                <img ng-if="friend['profileImageData']"
+                     class="media-object img-rounded thumbnail pull-right"
+                     data-ng-src="{{friend['profileImageData']}}">
+                <img ng-if="!friend['profileImageData']"
+                     class="media-object img-rounded thumbnail pull-right"
+                     src="images/no_photo_available.jpg" alt="No profile picture"/>
+                {{friend['name']}}
+            </a>
+        </td>
+    </tr>
 
-<div ng-repeat="friend in friends">
-    <a href="#/users/{{friend['username']}}">
-        <img ng-if="friend['profileImageData']"
-             class="media-object img-rounded thumbnail pull-right"
-             data-ng-src="{{friend['profileImageData']}}">
-        {{friend['name']}}
-    </a>
-</div>
+    <tr ng-if="!(state==='friends')" ng-repeat="friend in friends | limitTo: 6">
+        <td>
+            <a href="#/users/{{friend['username']}}">
+                <img ng-if="friend['profileImageData']"
+                     class="media-object img-rounded thumbnail pull-right"
+                     data-ng-src="{{friend['profileImageData']}}">
+                <img ng-if="!friend['profileImageData']"
+                     class="media-object img-rounded thumbnail pull-right"
+                     src="images/no_photo_available.jpg" alt="No profile picture"/>
+                {{friend['name']}}
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>

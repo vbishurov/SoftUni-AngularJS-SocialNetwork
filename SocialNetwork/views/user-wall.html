@@ -7,7 +7,12 @@
                  ng-src="{{userViewed.coverImageData}}">
             <img class="media-object img-rounded profile" ng-if="userViewed.profileImageData"
                  ng-src="{{userViewed.profileImageData}}">
+            <img ng-if="!userViewed.profileImageData"
+                 class="media-object img-rounded thumbnail pull-right"
+                 src="images/no_photo_available.jpg" alt="No profile picture"/>
+        </div>
 
+        <div class="panel-body col-lg-6">
             <div class="row" ng-if="isFriendWall || userViewed['username']===currentUser['username']">
                 <form name="postForm" method="post" ng-submit="addPost(postForm.postContent)">
                     <label for="addPost">Post content</label>
@@ -20,13 +25,17 @@
                     ng-click="sendRequest()">Send friend request
             </button>
 
-            <div ng-if="isFriendWall" >Friend</div>
+            <div ng-if="isFriendWall">Friend</div>
 
             <div ng-repeat="post in posts" class="postContainer" id="{{post['id']}}">
                 <div ui-view="post"></div>
             </div>
 
             <div infinite-scroll="update()" infinite-scroll-disabled="!id"></div>
+        </div>
+        <div class="panel-body col-lg-6">
+            <a href="#/users/{{userViewed['username']}}/friends">Friends - {{friends.length}} total</a>
+            <div ui-view="friends"></div>
         </div>
     </div>
 </div>
